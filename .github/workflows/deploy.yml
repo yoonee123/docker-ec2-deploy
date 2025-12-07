@@ -106,23 +106,7 @@ jobs:
           APP_PORT: ${{ vars.APP_PORT || '3000' }}
           AWS_REGION: ${{ env.AWS_REGION }}
         run: |
-          ssh -i ~/.ssh/ec2_key -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
-            set -e
-            
-            # ECR 로그인 및 이미지 Pull
-            aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
-            docker pull ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
-            
-            # 컨테이너 교체 (Stop, Rm 후 Run)
-            docker stop docker-web-app 2>/dev/null || true
-            docker rm docker-web-app 2>/dev/null || true
-            
-            docker run -d \
-              --name docker-web-app \
-              --restart unless-stopped \
-              -p ${APP_PORT}:${APP_PORT} \
-              ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
-            
-            echo "배포 완료!"
-            docker ps | grep docker-web-app || true
+          ssh -i ~/.ssh/ec2_key -o StrictHostKeyChecking=no ec2-user@98.85.224.33 << EOF
+            echo "EC2 SSH 연결 테스트"
+            exit
           EOF
