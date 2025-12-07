@@ -265,7 +265,6 @@ app.get('/', (req, res) => {
         <div class="header">
           <h1>🚀 ${APP_NAME}</h1>
           <p> 정서윤 | 20201599 </p>
-          ㅇㅁㅁㅇㄴㅁㅇㅁㄴㅇㅁㄴ
         </div>
 
         <div class="tabs">
